@@ -90,3 +90,59 @@ lim_inferior = 3
 lim_superior = 53
 
 tupla_secuencia = tupla_primos[tupla_primos.index(lim_inferior):tupla_primos.index(lim_superior)+2:2]
+
+######## CASO 4
+
+pedidos_semana_1 = (3,2)
+pedidos_semana_2 = (2,4)
+pedidos_semana_3 = (1,1)
+
+tupla_pedidos = (pedidos_semana_1,pedidos_semana_2,pedidos_semana_3)
+
+s = 2
+
+total_pedidos_semana_s = sum(tupla_pedidos[s-1])
+
+######## CASO 5
+
+dicc_meses = {"Enero":31,
+              "Febrero":28,
+              "Marzo": 31,
+              "Abril": 30,
+              "Mayo":31,
+              "Julio":31,
+              "Agosto":31,
+              "Septiembre":30,
+              "Noviembre":30}
+
+dicc_meses["Junio"]=30
+dicc_meses["Octubre"]=31
+dicc_meses["Diciembre"]=31
+
+###### CASO 6
+
+import numpy as np
+
+matriz_0 = np.array([[0,1,0,1,1],[0,0,0,0,1],[1,0,0,1,0],[1,0,1,0,1]])
+
+var = matriz_0[0,0]
+
+matriz={}
+
+i=0
+j=0
+
+while i <= 3:
+    j=0
+    while j <= 4:
+        if matriz_0[i,j] == 1:
+            matriz[(i+1,j+1)]= 1
+            j=j+1
+        else:
+            j=j+1
+    i=i+1
+    
+h = 5
+t = 2
+
+prediccion_familia = matriz.get((t,h),0) 
