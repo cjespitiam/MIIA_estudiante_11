@@ -192,7 +192,7 @@ conteo_E2 = 0
 conteo_E3 = 0
 conteo_E4 = 0
 conteo_E5 = 0
-ganadores_becas=np.array(['500', 'prueba', 'prueba', 'prueba', 'prueba', 'prueba', 'prueba','prueba'],['501', 'prueba', 'prueba', 'prueba', 'prueba', 'prueba', 'prueba','prueba'])
+ganadores_becas=[]
 j_1=-1
 j_2=-1
 j_3=-1
@@ -201,27 +201,27 @@ j_5=-1
 
 
 while asignadas < becas:
-    if conteo_E1 < prop_estrato[0] and estrato_1_matriz_ord[j_1,0] not in ganadores_becas[:,0]:
+    if conteo_E1 < prop_estrato[0] : #and estrato_1_matriz_ord[j_1,0] not in ganadores_becas[:,0]:
         ganadores_becas.append(estrato_1_matriz_ord[j_1,:])
         asignadas=asignadas+1
         conteo_E1=conteo_E1+1
         j_1=j_1-1
-    elif conteo_E2 < prop_estrato[1] and estrato_2_matriz_ord[j_2,0] not in ganadores_becas[:,0]:    
+    elif conteo_E2 < prop_estrato[1] : # and estrato_2_matriz_ord[j_2,0] not in ganadores_becas[:,0]:    
         ganadores_becas.append(estrato_2_matriz_ord[j_2,:])
         asignadas=asignadas+1
         conteo_E2=conteo_E2+1    
         j_2=j_2-1
-    elif conteo_E3 < prop_estrato[2] and estrato_3_matriz_ord[j_3,0] not in ganadores_becas[:,0]:    
+    elif conteo_E3 < prop_estrato[2] : # and estrato_3_matriz_ord[j_3,0] not in ganadores_becas[:,0]:    
         ganadores_becas.append(estrato_3_matriz_ord[j_3,:])
         asignadas=asignadas+1
         conteo_E3=conteo_E3+1     
         j_3=j_3-1
-    elif conteo_E4 < prop_estrato[3] and estrato_4_matriz_ord[j_4,0] not in ganadores_becas[:,0]:    
+    elif conteo_E4 < prop_estrato[3] : # and estrato_4_matriz_ord[j_4,0] not in ganadores_becas[:,0]:    
         ganadores_becas.append(estrato_4_matriz_ord[j_4,:])
         asignadas=asignadas+1
         conteo_E4=conteo_E4+1   
         j_4=j_4-1
-    elif conteo_E5 < prop_estrato[4] and estrato_5_matriz_ord[j_5,0] not in ganadores_becas[:,0]:    
+    elif conteo_E5 < prop_estrato[4] : # and estrato_5_matriz_ord[j_5,0] not in ganadores_becas[:,0]:    
         ganadores_becas.append(estrato_5_matriz_ord[j_5,:])
         asignadas=asignadas+1
         conteo_E5=conteo_E5+1
@@ -232,13 +232,12 @@ while asignadas < becas:
         conteo_E3 = 0
         conteo_E4 = 0
         conteo_E5 = 0   
+        
+matriz_ganadores = np.array(ganadores_becas)      
+
+print(matriz_ganadores)  
 
 
-if conteo_E1 < prop_estrato[0] and estrato_1_matriz_ord[j_1,0] not in ganadores_becas[:,0]:
-    ganadores_becas.append(estrato_1_matriz_ord[j_1,:])
-    asignadas=asignadas+1
-    conteo_E1=conteo_E1+1
-    j_1=j_1-1
 
 
     
