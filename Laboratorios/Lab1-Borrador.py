@@ -1,10 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Sep 27 16:35:02 2021
-
-@author: cjespitiam
-"""
+# código
 
 def cargar(ruta):
     
@@ -15,7 +9,7 @@ def cargar(ruta):
         lista = [linea.rstrip() for linea in archivo]
         nombre=lista
     
-    return nombre 
+    return lista 
 
 edad_base = open("/Users/cjespitiam/Documents/MIIA/1_Herramientas_Computacionales_para_Analisis_de_Datos/HCAD/Lab 1/Archivos/edad.txt", "r")
 genero_base = open("/Users/cjespitiam/Documents/MIIA/1_Herramientas_Computacionales_para_Analisis_de_Datos/HCAD/Lab 1/Archivos/genero.txt", "r")
@@ -40,6 +34,8 @@ promedio=cargar(promedio_base)
 # importación de paquetes necesarios
 
 import numpy as np
+
+from scipy import stats 
 
 import matplotlib.pyplot as plt
 
@@ -69,7 +65,15 @@ print("Desviación de Edad:",desviacion_edad)
 
 print("Desviación de Estrato:",desviacion_estrato)
 
+# respuesta en texto (solo leeremos los primeros 300 caracteres de la respuesta)
+
+pregunta_negocio = '¿Cual de los dos grupos es el mas adecuado para distribuir las becas disponibles de la universidad?'
+
+pregunta_analytics = '¿Que metodologia es la mas apta, la mas eficiente y la mas equilibrada para asignar las becas de la universidad?'
+
 # código
+
+import numpy as np
  
 becas = input("Cuantas becas hay disponibles: ")
 
@@ -233,11 +237,153 @@ while asignadas < becas:
         conteo_E4 = 0
         conteo_E5 = 0   
         
-matriz_ganadores = np.array(ganadores_becas)      
+matriz_ganadores_1 = np.array(ganadores_becas)
 
-print(matriz_ganadores)  
+# código 
+
+becas = int(becas)   
 
 
+#Datos como matriz
 
+i=0
+j=0
+id_datos=[]
+llave=[]
 
+while i<500:
+    id_datos.append(i)
+    i=i+1
     
+while j<500:
+    llave.append(region[j]+'-'+genero[j])
+    j=j+1    
+    
+    
+llave_array = np.array(llave)   
+
+(llave_unicos, count_llave) = np.unique(llave_array, return_counts=True)    
+
+matrix_aux = [id_datos,edad,genero,estado_civil,escolaridad,estrato,region,promedio,llave] 
+
+matriz_datos = np.array(matrix_aux)
+
+#Matriz por estrato
+
+i=0
+n=1
+
+
+for k in llave_unicos:
+    globals()['llave_%s' % n] = []
+    
+    while i < 500:
+        if matriz_datos[8,i] == k:
+            globals()['llave_%s' % n].append(matriz_datos[:,i])
+            i=i+1
+        else:
+            i=i+1
+    globals()['matriz_%s' % n] = np.array(globals()['llave_%s' % n])  
+    globals()['matriz_%s' % n] = globals()['matriz_%s' % n][globals()['matriz_%s' % n][:,7].argsort()]      
+    n=n+1
+    i=0         
+    
+prop = int(np.floor(becas/len(llave_unicos)))    
+
+
+
+n=1
+ganadores_becas=[]
+
+
+for k in llave_unicos:
+    
+    globals()['conteo_%s' % n] = 0
+    globals()['j_%s' % n] = -1
+
+    while globals()['conteo_%s' % n] < prop:
+        if globals()['conteo_%s' % n] < len(globals()['matriz_%s' % n]):
+            ganadores_becas.append(globals()['matriz_%s' % n][globals()['j_%s' % n],:])
+            globals()['conteo_%s' % n]=globals()['conteo_%s' % n]+1
+            globals()['j_%s' % n]=globals()['j_%s' % n]-1
+        else:
+            globals()['conteo_%s' % n]=globals()['conteo_%s' % n]+1
+            globals()['j_%s' % n]=globals()['j_%s' % n]-1
+        
+    n=n+1    
+    
+matriz_ganadores_2 = np.array(ganadores_becas) 
+
+edad_1 =[]
+edad_2 =[]
+estrato_1 =[]
+estrato_2 =[]
+region_1 = []
+region_2 = []
+promedio_1=[]
+promedio_2=[]
+
+for i in matriz_ganadores_1:
+    edad_1.append(int(i[1]))
+
+for i in matriz_ganadores_2:
+    edad_2.append(int(i[1]))
+    
+for i in matriz_ganadores_1:
+    estrato_1.append(int(i[5]))
+
+for i in matriz_ganadores_2:
+    estrato_2.append(int(i[5]))
+
+for i in matriz_ganadores_1:
+    region_1.append(i[6])
+
+for i in matriz_ganadores_2:
+    region_2.append(i[6])
+
+for i in matriz_ganadores_1:
+    promedio_1.append(float(i[7]))
+
+for i in matriz_ganadores_2:
+    promedio_2.append(float(i[7]))  
+    
+intervalos = range(min(edad_1), max(edad_1) )
+
+plt.hist(x=edad_1, bins=intervalos, color='#F2AB6D', rwidth=1.85)
+plt.title('Histograma de edades Grupo 1')
+plt.xlabel('Edades')
+plt.ylabel('Frecuencia')
+plt.xticks(intervalos)
+
+plt.show()    
+
+intervalos = range(min(edad_2), max(edad_2) )
+
+plt.hist(x=edad_2, bins=intervalos, color='#F2AB6D', rwidth=1.85)
+plt.title('Histograma de edades Grupo 2')
+plt.xlabel('Edades')
+plt.ylabel('Frecuencia')
+plt.xticks(intervalos)
+
+plt.show()    
+
+plt.scatter(edad_1,promedio_1)
+plt.title('Dispersion de edad Vs Promedio Grupo 1')
+
+plt.show()
+
+plt.scatter(edad_2,promedio_2)
+plt.title('Dispersion de edad Vs Promedio Grupo 2')
+
+plt.show()
+
+plt.scatter(promedio_1,estrato_1)
+plt.title('Dispersion de estratos Vs Promedio Grupo 1')
+
+plt.show()
+
+plt.scatter(promedio_2,estrato_2)
+plt.title('Dispersion de estratos Vs Promedio Grupo 2')
+
+plt.show()
+
