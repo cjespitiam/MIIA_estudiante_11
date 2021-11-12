@@ -245,4 +245,17 @@ plt.scatter(promedio_3,estrato_3)
 plt.title('Dispersion de estratos Vs Promedio Grupo 1')
 
 plt.show()
+
+plt.hist(x=region_3, color='#F2AB6D', rwidth=1.85)
+plt.title('Histograma de Regiones')
+plt.xlabel('Regiones')
+plt.ylabel('Frecuencia')
+
+plt.show()
+
+
+
+
+
+
     
